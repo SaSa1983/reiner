@@ -139,7 +139,6 @@ function setAxisTemperature(position, value) {
 function setThrottle(val) {
     let steeringTopDiv = document.querySelector(".progressWrap.top .val");
     steeringTopDiv.style.width="0px";
-
     steeringTopDiv.style.width= val + "%";
 
 }
@@ -150,7 +149,7 @@ function setThrottle(val) {
 function setBrake(val) {
     let steeringBottomDiv = document.querySelector(".progressWrap.bottom .val");
     steeringBottomDiv.style.width="0px";
-    steeringBottomDiv.style.width= (val * -1) + "%";
+    steeringBottomDiv.style.width= (val) + "%";
 
 }
 

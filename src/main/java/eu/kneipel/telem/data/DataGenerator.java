@@ -28,6 +28,7 @@ public class DataGenerator extends Thread {
 
                         int throttle = -1;
                         int brake = -1;
+                        int steering = -101;
 
                         switch (p.getHeader().getPacketId()) {
                             case 0:
@@ -47,6 +48,8 @@ public class DataGenerator extends Thread {
                                         .get(id).getThrottle();
                                 brake = ((PacketCarTelemetryData) p).getCarTelemetryData()
                                         .get(id).getBrake();
+                                steering = ((PacketCarTelemetryData) p).getCarTelemetryData()
+                                        .get(id).getSteer();
 
                                 break;
                             case 7:
@@ -55,8 +58,14 @@ public class DataGenerator extends Thread {
 
                         TelemMessage message = new TelemMessage();
 
+                        if (throttle >= 0)
                             message.setThrottle(throttle);
+
+                        if (brake >= 0)
                             message.setBrake(brake);
+
+                        if (steering >= -100)
+                            message.setBrake(steering);
 
                         try {
 
