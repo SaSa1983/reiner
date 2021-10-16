@@ -36,6 +36,8 @@ public class F12018TelemetryUDPServer {
 	private int port;
 	private Consumer<Packet> packetConsumer;
 
+	private boolean shutdown = false;
+
 	private F12018TelemetryUDPServer() {
 		bindAddress = DEFAULT_BIND_ADDRESS;
 		port = DEFAULT_PORT;
@@ -107,7 +109,7 @@ public class F12018TelemetryUDPServer {
 			channel.socket().bind(new InetSocketAddress(bindAddress, port));
 			ByteBuffer buf = ByteBuffer.allocate(MAX_PACKET_SIZE);
 			buf.order(ByteOrder.LITTLE_ENDIAN);
-			while (true) {
+			while (!shutdown) {
 
 				channel.receive(buf);
 				final Packet packet = PacketDeserializer.read(buf.array());
@@ -115,11 +117,17 @@ public class F12018TelemetryUDPServer {
 					packetConsumer.accept(packet);
 				});
 				buf.clear();
-
 			}
 		} finally {
 			executor.shutdown();
 		}
 	}
 
+	public void markForShutdown() {
+		this.shutdown = true;
+	}
+
+	public boolean isMarkedForShutdown() {
+		return this.shutdown;
+	}
 }
