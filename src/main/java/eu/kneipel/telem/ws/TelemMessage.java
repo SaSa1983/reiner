@@ -11,6 +11,9 @@ public class TelemMessage {
   private Integer throttle;
 
   @JsonProperty
+  private Integer brake;
+
+  @JsonProperty
   private Integer speed;
 
   @JsonProperty
@@ -163,4 +166,10 @@ public class TelemMessage {
     this.throttle = throttle;
     return this;
   }
+
+  public TelemMessage setBrake(int brake) {
+    this.brake = brake;
+    return this;
+  }
+
 }

@@ -138,14 +138,20 @@ function setAxisTemperature(position, value) {
  */
 function setThrottle(val) {
     let steeringTopDiv = document.querySelector(".progressWrap.top .val");
-    let steeringBottomDiv = document.querySelector(".progressWrap.bottom .val");
     steeringTopDiv.style.width="0px";
+
+    steeringTopDiv.style.width= val + "%";
+
+}
+
+/**
+ * @param {Number} val value from -100 to 100 (incusive)
+ */
+function setBrake(val) {
+    let steeringBottomDiv = document.querySelector(".progressWrap.bottom .val");
     steeringBottomDiv.style.width="0px";
-    if (val > 0) {
-        steeringTopDiv.style.width= val + "%";
-    } else if (val < 0) {
-        steeringBottomDiv.style.width= (val * -1) + "%";
-    }
+    steeringBottomDiv.style.width= (val * -1) + "%";
+
 }
 
 /**
@@ -288,6 +294,9 @@ class TelemWsEndpoint {
             }
             if (message.throttle != null) {
                 setThrottle(message.throttle);
+            }
+            if (message.brake != null) {
+                setBrake(message.brake);
             }
 
         }
